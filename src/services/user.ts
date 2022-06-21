@@ -1,6 +1,6 @@
 import config from "config";
 import { AppDataSource } from "../data-source";
-import { User } from "../entity/User";
+import { User } from "../entity/user";
 import { CreateUserInput } from "../schemas/user";
 import redisClient from "../utils/connectRedis";
 import { signJwt } from "../utils/jwt";
@@ -44,4 +44,3 @@ export const signTokens = async (user: User) => {
 
     return { access_token, refresh_token };
 };
-

@@ -1,5 +1,6 @@
 import { MigrationInterface, QueryRunner, getRepository } from "typeorm";
-import { RoleEnumType, User } from "../entity/User";
+import { AppDataSource } from "../data-source";
+import { RoleEnumType, User } from "../entity/user";
 
 export class CreateAdminUser1547919837483 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -8,7 +9,7 @@ export class CreateAdminUser1547919837483 implements MigrationInterface {
     user.password = "admin";
     user.hashPassword();
     user.role = RoleEnumType.ADMIN;
-    const userRepository = getRepository(User);
+    const userRepository = AppDataSource.getRepository(User);
     await userRepository.save(user);
   }
 

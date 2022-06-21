@@ -1,5 +1,5 @@
-import { object, string, TypeOf, z } from 'zod';
-import { RoleEnumType } from '../entity/User';
+import { number, object, string, TypeOf, z } from 'zod';
+import { RoleEnumType } from '../entity/user';
 
 export const createUserSchema = object({
   body: object({
@@ -16,6 +16,9 @@ export const createUserSchema = object({
       .max(32, 'Password must be less than 32 characters'),
     passwordConfirm: string({
       required_error: 'Please confirm your password',
+    }),
+    age:number({
+      required_error: 'Enter age',
     }),
     role: z.optional(z.nativeEnum(RoleEnumType)),
   }).refine((data) => data.password === data.passwordConfirm, {
@@ -34,6 +37,14 @@ export const loginUserSchema = object({
     }).min(8, 'Invalid email or password'),
   }),
 });
+
+export const verifyEmailSchema = object({
+  params:object({
+    verificationCode: string(),
+  })
+});
+
+export type VerifyEmailInput = TypeOf<typeof verifyEmailSchema>['params']
 
 export type CreateUserInput = Omit<
   TypeOf<typeof createUserSchema>['body'],
