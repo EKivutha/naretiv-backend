@@ -6,7 +6,7 @@ import * as bodyParser from "body-parser";
 import morgan from 'morgan';
 import { Request, Response } from "express";
 import { AppDataSource } from "./data-source";
-import { User } from "./entity/User";
+import { User } from "./entity/user";
 import redisClient from "./utils/connectRedis";
 import validateEnv from "./utils/validateEnv";
 import cors from 'cors';
