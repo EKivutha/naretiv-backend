@@ -13,6 +13,7 @@ import cors from 'cors';
 import config from "config";
 import authRouter from './routes/auth';
 import userRouter from './routes/user';
+import productRouter from './routes/product';
 import AppError from "./utils/appError";
 import cookieParser from 'cookie-parser';
 import nodemailer from 'nodemailer';
@@ -44,6 +45,7 @@ AppDataSource.initialize()
 
         app.use('/api/auth', authRouter);
         app.use('/api/users', userRouter);
+        app.use('/api/products', productRouter);
         // app.use(
         //     "/graphql",
         //     graphqlHTTP({
