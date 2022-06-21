@@ -12,6 +12,13 @@ export default {
     accessTokenPublicKey: 'JWT_ACCESS_TOKEN_PUBLIC_KEY',
     refreshTokenPrivateKey: 'JWT_REFRESH_TOKEN_PRIVATE_KEY',
     refreshTokenPublicKey: 'JWT_REFRESH_TOKEN_PUBLIC_KEY',
+
+    smtp: {
+      host: 'EMAIL_SMTP_HOST',
+      pass: 'EMAIL_PASS',
+      port: 'EMAIL_SMTP_PORT',
+      user: 'EMAIL_USER',
+    },
   };
   
   
