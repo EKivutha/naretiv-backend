@@ -2,7 +2,7 @@ import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, On
 import Model from './model';
 import { User } from './user';
 
-@Entity('posts')
+@Entity('messages')
 export class Message extends Model {
 
     @OneToMany(()=>User, (user) => user.message)
