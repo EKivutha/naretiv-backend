@@ -12,7 +12,7 @@ import AppError from '../utils/appError';
 import redisClient from '../utils/connectRedis';
 import { signJwt, verifyJwt } from '../utils/jwt';
 import { CreateUserInput, LoginUserInput, VerifyEmailInput } from '../schemas/user';
-import { User } from '../entity/User';
+import { User } from '../entity/user';
 import Email from '../utils/email';
 import crypto from 'crypto';
 import { nextTick } from 'process';
