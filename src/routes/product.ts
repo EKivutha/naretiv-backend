@@ -1,4 +1,5 @@
 import express from 'express';
+import { createProductHandler, deleteProductHandler, getAllProducts, getProductHandler, updateProductHandler } from '../controller/product';
 import { getMeHandler } from '../controller/UserController';
 import { deserializeUser } from '../middleware/deserializeUser';
 import { requireUser } from '../middleware/requireUser';
@@ -8,18 +9,18 @@ const router = express.Router();
 router.use(deserializeUser, requireUser);
 
 // Get all products
-router.get('/products', getMeHandler);
+router.get('/products', getAllProducts);
 
 //create a new post
-router.post('/products', getMeHandler);
+router.post('/products', createProductHandler);
 
 //retrieve a single product
-router.get('/products/:id', getMeHandler);
+router.get('/products/:id', getProductHandler);
 
 //update a product
-router.patch('/products/:id', getMeHandler);
+router.patch('/products/:id', updateProductHandler);
 
 //delete a product
-router.delete('/products/:id', getMeHandler);
+router.delete('/products/:id', deleteProductHandler);
 
 export default router;
