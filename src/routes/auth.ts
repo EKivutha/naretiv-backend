@@ -1,9 +1,9 @@
 import express from 'express';
-import { registerUserHandler, loginUserHandler, logoutHandler, refreshAccessTokenHandler } from '../controller/auth';
+import { registerUserHandler, loginUserHandler, logoutHandler, refreshAccessTokenHandler, verifyEmailHandler } from '../controller/auth';
 import { deserializeUser } from '../middleware/deserializeUser';
 import { requireUser } from '../middleware/requireUser';
 import { validate } from '../middleware/validate';
-import { createUserSchema, loginUserSchema } from '../schemas/user';
+import { createUserSchema, loginUserSchema, verifyEmailSchema } from '../schemas/user';
 
 const router = express.Router();
 
@@ -17,7 +17,15 @@ router.post('/login', validate(loginUserSchema), loginUserHandler);
 router.get('/logout', deserializeUser, requireUser, logoutHandler);
 
 // Refresh access token
-router.get('/refresh', refreshAccessTokenHandler);
+router.get(
+    '/refresh', 
+    refreshAccessTokenHandler);
+//Verify email address
+router.get(
+    '/verifyemail/:verificationCode',
+    validate(verifyEmailSchema),
+    verifyEmailHandler
+  );
 
 export default router;
 
