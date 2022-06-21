@@ -1,11 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, Index, ManyToOne, BeforeInsert } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, Index, ManyToOne, BeforeInsert, OneToMany, ManyToMany } from "typeorm"
 import * as bcrypt from "bcryptjs";
-import Model from "./model";
 export enum RoleEnumType {
-    BUYER = 'buyer',
-    SELLER = 'seller',
-    ADMIN = 'admin',
+  BUYER = 'buyer',
+  SELLER = 'seller',
+  ADMIN = 'admin',
 }
+import crypto from 'crypto';
+import Model from "./model";
+import { Message } from "./message";
+import { Product } from "./product";
+import { Order } from "./order";
 
 @Entity('users')
 export class User extends Model {
@@ -25,21 +29,35 @@ export class User extends Model {
   @Column({
     type: 'enum',
     enum: RoleEnumType,
-    default: RoleEnumType.BUYER,
+    // default: RoleEnumType.BUYER,
   })
   role!: RoleEnumType;
 
   @Column()
   age: number
 
-//   @ManyToOne(() => Message, (message) => message.id)
-//   messages!: Message
+  @Column({
+    default: false
+  })
+  verified:boolean;
 
-//   @ManyToOne(() => Message, (product) => product.id)
-//   products!: Product
+  @Index('verificationCode_index')
+  @Column({
+    type: 'text',
+    nullable: true
+  })
+  verificationCode!: string | null;
+ // User can create multiple products and a single message can belong to many receipients
+    @ManyToMany(() => Message, (message) => message.id)
+    message!: Message[]
 
-//   @ManyToOne(() => Message, (orders) => orders.id)
-//   orders!: Order
+  // User can create multiple products but a single product belongs to one user
+    @OneToMany(() => Product, (product) => product.id)
+    products!: Product[]
+
+ // User can create multiple order but a single order belongs to one user
+    @OneToMany(() => Order, (orders) => orders.id)
+    orders!: Order[]
 
   static findByName(name: string, lastName: string) {
     return this.createQueryBuilder("user")
@@ -69,5 +87,16 @@ export class User extends Model {
 
   toJSON() {
     return { ...this, password: undefined, verified: undefined };
+  }
+
+  static createVerificationCode() {
+    const verificationCode = crypto.randomBytes(32).toString('hex');
+
+    const hashVerificationCode = crypto
+      .createHash('sha256')
+      .update(verificationCode)
+      .digest('hex');
+
+    return { verificationCode, hashVerificationCode }
   }
 }
