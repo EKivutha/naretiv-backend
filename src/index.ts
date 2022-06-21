@@ -15,12 +15,22 @@ import authRouter from './routes/auth';
 import userRouter from './routes/user';
 import AppError from "./utils/appError";
 import cookieParser from 'cookie-parser';
+import nodemailer from 'nodemailer';
 
 AppDataSource.initialize()
     .then(async () => {
         validateEnv();
+
         // create express app
         const app = express()
+
+        const credentials = await nodemailer.createTestAccount();
+        console.log(credentials);
+
+        // TEMPLATE ENGINE
+        app.set('view engine', 'pug');
+        app.set('views', `${__dirname}/views`);
+
         app.use(express.json({ limit: '10kb' }));
         if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
         app.use(cookieParser());
@@ -50,29 +60,43 @@ AppDataSource.initialize()
                 message,
             });
         });
+
         app.all('*', (req: Request, res: Response, next: NextFunction) => {
             next(new AppError(404, `Route ${req.originalUrl} not found`));
-          });
+        });
+
+        // GLOBAL ERROR HANDLER
+        app.use(
+            (error: AppError, req: Request, res: Response, next: NextFunction) => {
+                error.status = error.status || 'error';
+                error.statusCode = error.statusCode || 500;
+
+                res.status(error.statusCode).json({
+                    status: error.status,
+                    message: error.message,
+                });
+            }
+        );
 
         // start express server
         app.listen(3001)
 
-        // insert new users for test
+        // // insert new users for test
         // await AppDataSource.manager.save(
         //     AppDataSource.manager.create(User, {
         //         name: "Timber",
-        //         email: "Saw",
+        //         email: "saw@gmail.com",
         //         age: 27,
-        //         password: '1234'
+        //         password: '12341234'
         //     })
         // )
 
         // await AppDataSource.manager.save(
         //     AppDataSource.manager.create(User, {
         //         name: "Phantom",
-        //         email: "Assassin",
+        //         email: "assassin@gmail.com",
         //         age: 24,
-        //         password: '1234'
+        //         password: '12341234'
         //     })
         // )
 
