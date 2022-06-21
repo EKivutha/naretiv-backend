@@ -13,7 +13,7 @@
       "@types/nodemailer": "^6.4.4",
       "@types/pug": "^2.0.6",
       "morgan": "^1.10.0",
-      "ts-node": "10.7.0",
+      "ts-node": "^10.8.1",
       "typescript": "4.5.2"
    },
    "dependencies": {
@@ -45,7 +45,7 @@
       "build": "tsc -p .",
       "dev": " nodemon src/index.ts",
       "typeorm": "typeorm-ts-node-commonjs",
-      "migrate": "rm -rf build && yarn build && yarn typeorm migration:generate ./src/migrations/added-entity -d ./src/utils/data-source.ts",
+      "migrate": "rm -rf build && yarn build && yarn typeorm migration:generate ./src/migration/createAdminUser.ts -d ./src/utils/data-source.ts",
       "db:push": "rm -rf build && yarn build && yarn typeorm migration:run -d src/utils/data-source.ts"
    }
 }
