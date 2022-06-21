@@ -19,7 +19,7 @@ export const findUserByEmail = async ({ email }: { email: string }) => {
 };
 
 export const findUserById = async (userId: string) => {
-    return await userRepository.findOneBy({ id: userId });
+    return await userRepository.findOneBy({ id: userId,  });
 };
 
 export const findUser = async (query: Object) => {

@@ -75,8 +75,12 @@ export const getProductHandler = async (
 
             })
         }
-        else{
-            return next(new AppError(401, 'User is not allowed to get product list')); 
+        else {
+            return next(
+                new AppError(
+                    401, 'User is not allowed to get product list'
+                )
+            );
         }
     }
     catch (err: any) {

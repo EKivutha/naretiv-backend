@@ -9,9 +9,9 @@ export class Message extends Model {
     @JoinColumn()
     user_to: User[];
 
-    // @ManyToOne(()=>User, (user) => user.message)
-    // @JoinColumn()
-    // user_from: User;
+    @ManyToOne(()=>User, (user) => user.message)
+    @JoinColumn()
+    user: User;
 
     @Column()
     receiver_id: string;
