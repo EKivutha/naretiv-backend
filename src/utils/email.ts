@@ -11,7 +11,8 @@ const smtp = config.get<{
     pass: string;
 }>('smtp');
 
-
+const credentials =  nodemailer.createTestAccount();
+console.log(credentials);
 export default class Email {
     name: string;
     to: string;
@@ -22,13 +23,14 @@ export default class Email {
         this.to = user.email;
         this.from = `Codevo ${config.get<string>('emailFrom')}`;
     };
+    
 
-    private newTransport() {
+    private async newTransport() {
         return nodemailer.createTransport({
             ...smtp,
             auth: {
-                user: smtp.user,
-                pass: smtp.pass
+                user: (await credentials).user,
+                pass: (await credentials).pass
             },
         });
     }
@@ -48,7 +50,7 @@ export default class Email {
             html,
         };
 
-        const info = await this.newTransport().sendMail(mailOptions);
+        const info = await (await this.newTransport()).sendMail(mailOptions);
         console.log(nodemailer.getTestMessageUrl(info));
     }
 
