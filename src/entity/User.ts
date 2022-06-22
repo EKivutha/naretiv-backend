@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, Index, ManyToOne, BeforeInsert, OneToMany, ManyToMany } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, Index, ManyToOne, BeforeInsert, OneToMany, ManyToMany, JoinColumn } from "typeorm"
 import * as bcrypt from "bcryptjs";
 export enum RoleEnumType {
   BUYER = 'buyer',
@@ -39,7 +39,7 @@ export class User extends Model {
   @Column({
     default: false
   })
-  verified:boolean;
+  verified: boolean;
 
   @Index('verificationCode_index')
   @Column({
@@ -47,17 +47,24 @@ export class User extends Model {
     nullable: true
   })
   verificationCode!: string | null;
- // User can create multiple products and a single message can belong to many receipients
-    @ManyToMany(() => Message, (message) => message.id)
-    message!: Message[]
+  // User can create multiple message and a single message can belong to one sender
+  @ManyToMany(() => Message, (message) => message.user)
+
+  sent_message!: Message[]
+
+  @ManyToMany(() => Message, (message) => message.user_to)
+
+  received_message!: Message[]
 
   // User can create multiple products but a single product belongs to one user
-    @OneToMany(() => Product, (product) => product.id)
-    products!: Product[]
+  @OneToMany(() => Product, (product) => product.user)
 
- // User can create multiple order but a single order belongs to one user
-    @OneToMany(() => Order, (orders) => orders.id)
-    orders!: Order[]
+  products!: Product[]
+
+  // User can create multiple order but a single order belongs to one user
+  @OneToMany(() => Order, (orders) => orders.user)
+
+  orders!: Order[]
 
   static findByName(name: string, lastName: string) {
     return this.createQueryBuilder("user")
