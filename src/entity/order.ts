@@ -8,7 +8,7 @@ import { User } from './user';
 @Entity('orders')
 export class Order extends Model {
 
-    @ManyToOne(()=>User, (user) => user.message)
+    @ManyToOne(()=>User, (user) => user.orders)
     @JoinColumn()
     user: User;
 
@@ -23,6 +23,8 @@ export class Order extends Model {
     @Column()
     order_price: number;
 
+    @Column()
+    product_id: string;
 
 
 }
