@@ -1,5 +1,7 @@
 import config from "config";
+import { FindOptionsWhere, FindOptionsSelect, FindOptionsRelations } from "typeorm";
 import { AppDataSource } from "../data-source";
+import { Product } from "../entity/product";
 import { User } from "../entity/user";
 import { CreateUserInput } from "../schemas/user";
 import redisClient from "../utils/connectRedis";
@@ -25,6 +27,26 @@ export const findUserById = async (userId: string) => {
 export const findUser = async (query: Object) => {
     return await userRepository.findOneBy(query);
 };
+
+export const findUsers = async (
+    where: FindOptionsWhere<User> = {},
+    select: FindOptionsSelect<User> = {},
+    relations: FindOptionsRelations<User> = {}
+  ) => {
+    return await userRepository.find({
+      where,
+      select,
+      relations:{
+        products:true,
+        // message:true,
+        orders:true
+      },
+    });
+        // return await userRepository
+        // .createQueryBuilder("user")
+        // .leftJoinAndSelect("user.products", "products")
+        // .getMany()
+}
 
 // 👇 Sign access and Refresh Tokens
 export const signTokens = async (user: User) => {
