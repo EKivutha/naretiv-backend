@@ -1,15 +1,15 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import Model from './model';
 import { User } from './user';
 
 @Entity('messages')
 export class Message extends Model {
 
-    @OneToMany(()=>User, (user) => user.message)
+    @ManyToMany(()=>User, (user) => user.received_message)
     @JoinColumn()
-    user_to: User[];
+    user_to: User;
 
-    @ManyToOne(()=>User, (user) => user.message)
+    @ManyToOne(()=>User, (user) => user.sent_message)
     @JoinColumn()
     user: User;
 
@@ -17,7 +17,7 @@ export class Message extends Model {
     receiver_id: string;
 
     @Column()
-    message_body: number;
+    message_body: string;
 
 
 }
