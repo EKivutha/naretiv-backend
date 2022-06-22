@@ -12,15 +12,15 @@ router.use(deserializeUser, requireUser);
 router.get('/products', getAllProducts);
 
 //create a new post
-router.post('/products', createProductHandler);
+router.post('/create', createProductHandler);
 
 //retrieve a single product
-router.get('/products/:id', getProductHandler);
+router.get('/product/:id', getProductHandler);
 
 //update a product
-router.patch('/products/:id', updateProductHandler);
+router.patch('/product/:id', updateProductHandler);
 
 //delete a product
-router.delete('/products/:id', deleteProductHandler);
+router.delete('/product/:id', deleteProductHandler);
 
 export default router;
