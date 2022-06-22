@@ -25,7 +25,10 @@ AppDataSource.initialize()
         // create express app
         const app = express()
 
+        const credentials = await nodemailer.createTestAccount();
+        // console.log(credentials);
         
+    
 
         // TEMPLATE ENGINE
         app.set('view engine', 'pug');
