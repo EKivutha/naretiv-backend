@@ -19,6 +19,10 @@ export const createProduct = async (
 }
 
 
+export const findProductById = async (productId: string) => {
+    return await productRepository.findOneBy({ id: productId,  });
+};
+
 
 export const getProduct = async (
     postId:string
