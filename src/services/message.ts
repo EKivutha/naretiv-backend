@@ -9,12 +9,14 @@ const messageRepository = AppDataSource.getRepository(Message);
 
 export const createMessage = async (
     input: Partial<Message>,
-    user: User
+    user: User,
+    user_to: User
 ) => {
     return await messageRepository.save(
         messageRepository.create({
             ...input,
-            user
+            user_to,
+            user           
             
         }))
 }
