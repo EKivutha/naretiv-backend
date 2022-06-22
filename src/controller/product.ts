@@ -18,7 +18,7 @@ export const createProductHandler = async (
     try {
         const user = await findUserById(res.locals.user.id as string);
 
-        if (user!.role == 'seller') {
+        if (user!.role == 'seller' || user!.role == 'admin') {
             try {
                 const Product = await createProduct(req.body, user!);
 
