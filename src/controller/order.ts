@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { User } from '../entity/user';
 import {
     CreateOrderInput,
     DeleteOrderInput,
@@ -17,17 +18,24 @@ export const createOrderHandler = async (
     next: NextFunction
 ) => {
     try {
-        const user = await findUserById(res.locals.user.id as string);
+        const userId = res.locals.user.id as string;
+        const user = await findUserById(userId);
         const product = await findProductById(req.body.product_id)
+        const balance = user!.account_balance + req.body.order_price
+        
+        
 
         if (user!.role == 'buyer' || user!.role == 'admin') {
             try {
                 const Order = await createOrder(req.body, user!, product!);
+                const updateUserAccount = await User.updateAccount(balance, userId)
+                // const User = await updateUserHandler()
 
                 res.status(201).json({
                     status: 'success',
                     data: {
                         Order,
+                        updateUserAccount
                     },
                 });
             } catch (err: any) {
@@ -116,6 +124,7 @@ export const updateOrderHandler = async (
 ) => {
     try {
         const Order = await getOrder(req.params.OrderId);
+       
 
         if (!Order) {
             return next(new AppError(404, 'Order with that ID not found'));
@@ -124,6 +133,7 @@ export const updateOrderHandler = async (
         Object.assign(Order, req.body);
 
         const updatedOrder = await Order.save();
+       
 
         res.status(200).json({
             status: 'success',
@@ -154,6 +164,40 @@ export const deleteOrderHandler = async (
         res.status(204).json({
             status: 'success',
             data: null,
+        });
+    } catch (err: any) {
+        next(err);
+    }
+};
+
+export const payoutOrderHandler = async (
+    req: Request<UpdateOrderInput['params'], {}, UpdateOrderInput['body']>,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        
+        const Order = await getOrder(req.params.OrderId);
+        const product = await findProductById(Order!.product_id)
+        const userId = product!.user.id
+        const user = await findUserById(userId) //seller 
+        const balance = user!.account_balance + Order!.order_price
+       
+        if (!Order) {
+            return next(new AppError(404, 'Order with that ID not found'));
+        }
+
+        Object.assign(Order, req.body);
+
+        const updatedOrder = await Order.save();
+        const updateUserAccount = await User.updateAccount(balance, userId)
+
+
+        res.status(200).json({
+            status: 'success',
+            data: {
+                Order: updatedOrder,
+            },
         });
     } catch (err: any) {
         next(err);
