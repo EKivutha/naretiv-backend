@@ -24,7 +24,8 @@ export const AppDataSource = new DataSource({
   ...postgresConfig,
   type: 'postgres',
   synchronize: true, //allow message and auto order updates through api subscriptions.
-  logging: false,
+  // logging:true,
+  logging: "all",
   entities: [User, Product, Message, Order, Payment, Shipment, Rider],
   migrations: [CreateAdminUser1547919837483],
   subscribers: ['src/subscribers/**/*{.ts,.js}'],
