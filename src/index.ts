@@ -5,7 +5,7 @@ import helmet from 'helmet';
 import * as bodyParser from "body-parser";
 import morgan from 'morgan';
 import { Request, Response } from "express";
-import { AppDataSource } from "./data-source";
+import { AppDataSource } from "./utils/data-source";
 import { User } from "./entity/user";
 import redisClient from "./utils/connectRedis";
 import validateEnv from "./utils/validateEnv";
