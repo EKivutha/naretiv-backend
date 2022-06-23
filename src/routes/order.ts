@@ -1,5 +1,5 @@
 import express from 'express';
-import { createOrderHandler, deleteOrderHandler, getAllOrders, getOrderHandler, updateOrderHandler } from '../controller/order';
+import { createOrderHandler, deleteOrderHandler, getAllOrders, getOrderHandler, payoutOrderHandler, updateOrderHandler } from '../controller/order';
 import { getMeHandler } from '../controller/UserController';
 import { deserializeUser } from '../middleware/deserializeUser';
 import { requireUser } from '../middleware/requireUser';
@@ -15,12 +15,15 @@ router.get('/orders', getAllOrders);
 router.post('/create', createOrderHandler);
 
 //retrieve a single orders
-router.get('/orders/:id', getOrderHandler);
+router.get('/order/:id', getOrderHandler);
 
 //update a orders
-router.patch('/orders/:id', updateOrderHandler);
+router.patch('/update/:id', updateOrderHandler);
 
-//delete a orders
-router.delete('/orders/:id', deleteOrderHandler);
+//payout an order
+router.patch('/payout/:id', payoutOrderHandler);
+
+//delete an orders
+router.delete('/order/:id', deleteOrderHandler);
 
 export default router;
