@@ -24,9 +24,9 @@ export const getMessageSchema = object({
 export const updateMessageSchema = object({
     ...params,
     body: object({
-      title: string(),
-      content: string(),
-      image: string(),
+    //   re: string(),
+    //   content: string(),
+    //   image: string(),
     }).partial(),
   });
   
