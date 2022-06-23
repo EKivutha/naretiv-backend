@@ -24,9 +24,9 @@ export const getOrderSchema = object({
 export const updateOrderSchema = object({
     ...params,
     body: object({
-      title: string(),
-      content: string(),
-      image: string(),
+    //   title: string(),
+    //   content: string(),
+    //   image: string(),
     }).partial(),
   });
   
