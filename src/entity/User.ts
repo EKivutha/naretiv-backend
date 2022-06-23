@@ -41,6 +41,9 @@ export class User extends Model {
   })
   verified: boolean;
 
+  @Column()
+  account_balance: number;
+
   @Index('verificationCode_index')
   @Column({
     type: 'text',
@@ -75,6 +78,15 @@ export class User extends Model {
     return this.createQueryBuilder("user")
       .where("user.role = :role", { role })
       .getMany()
+  }
+  static updateAccount(accountBalance: number, userId: string) {
+    return this.createQueryBuilder("user")
+      .update(User)
+      .set({
+        account_balance: accountBalance
+      })
+      .where("id = : userId", { userId })
+      .execute()
   }
   @BeforeInsert()
   async hashPassword() {
