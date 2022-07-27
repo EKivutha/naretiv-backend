@@ -1,7 +1,6 @@
 import config from "config";
 import { FindOptionsWhere, FindOptionsSelect, FindOptionsRelations } from "typeorm";
-import { AppDataSource } from "../data-source";
-import { Product } from "../entity/product";
+import { AppDataSource } from "../utils/data-source";
 import { User } from "../entity/user";
 import { CreateUserInput } from "../schemas/user";
 import redisClient from "../utils/connectRedis";
@@ -21,7 +20,7 @@ export const findUserByEmail = async ({ email }: { email: string }) => {
 };
 
 export const findUserById = async (userId: string) => {
-    return await userRepository.findOneBy({ id: userId,  });
+    return await userRepository.findOneBy({ id: userId, });
 };
 
 export const findUser = async (query: Object) => {
@@ -32,20 +31,19 @@ export const findUsers = async (
     where: FindOptionsWhere<User> = {},
     select: FindOptionsSelect<User> = {},
     relations: FindOptionsRelations<User> = {}
-  ) => {
+) => {
     return await userRepository.find({
-      where,
-      select,
-      relations:{
-        products:true,
-        // message:true,
-        orders:true
-      },
+        where,
+        select,
+        relations: {
+            received_message: true,
+            sent_message: true,
+        },
     });
-        // return await userRepository
-        // .createQueryBuilder("user")
-        // .leftJoinAndSelect("user.products", "products")
-        // .getMany()
+    // return await userRepository
+    // .createQueryBuilder("user")
+    // .leftJoinAndSelect("user.products", "products")
+    // .getMany()
 }
 
 // 👇 Sign access and Refresh Tokens
@@ -66,3 +64,14 @@ export const signTokens = async (user: User) => {
 
     return { access_token, refresh_token };
 };
+
+export const updateAccount = async (accountBalance: number, userId: string) => {
+    return userRepository
+        .createQueryBuilder("user")
+        .update(User)
+        .set({
+            account_balance: accountBalance
+        })
+        .where("id = :userId", { userId })
+        .execute()
+}

@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner, getRepository } from "typeorm";
-import { AppDataSource } from "../data-source";
+import { AppDataSource } from "../utils/data-source";
 import { RoleEnumType, User } from "../entity/user";
 
 export class CreateAdminUser1547919837483 implements MigrationInterface {

@@ -9,7 +9,7 @@ const router = express.Router();
 router.use(deserializeUser, requireUser);
 
 // Get all Messages
-router.get('/messages', getAllMessages);
+router.get('/getall', getAllMessages);
 
 //create a new post
 router.post('/create', createMessageHandler);
@@ -18,9 +18,9 @@ router.post('/create', createMessageHandler);
 router.get('/message/:id', getMessageHandler);
 
 //update a Message
-router.patch('/message/:id', updateMessageHandler);
+router.patch('/update/:id', updateMessageHandler);
 
 //delete a Message
-router.delete('/message/:id', deleteMessageHandler);
+router.delete('/delete/:id', deleteMessageHandler);
 
 export default router;

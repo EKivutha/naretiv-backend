@@ -6,7 +6,6 @@ import {
     UpdateMessageInput,
 } from '../schemas/message';
 import { createMessage, findMessage, getMessage } from '../services/message';
-import { findProduct, findProductById } from '../services/product';
 import { findUserById } from '../services/user';
 import AppError from '../utils/appError';
 
@@ -20,29 +19,29 @@ export const createMessageHandler = async (
         const user = await findUserById(res.locals.user.id as string);
         const user_to = await findUserById(req.body.receiver_id as string)
 
-        if (user!.role == 'buyer' || user!.role == 'admin') {
-            try {
-                const Message = await createMessage(req.body, user!, user_to!);
 
-                res.status(201).json({
-                    status: 'success',
-                    data: {
-                        Message,
-                    },
+        try {
+            const Message = await createMessage(req.body, user!, user_to!);
+
+            res.status(201).json({
+                status: 'success',
+                data: {
+                    Message,
+                    user,
+                    user_to
+                },
+            });
+        } catch (err: any) {
+            if (err.code === '23505') {
+                return res.status(409).json({
+                    status: 'fail',
+                    message: 'Message with that title already exist',
                 });
-            } catch (err: any) {
-                if (err.code === '23505') {
-                    return res.status(409).json({
-                        status: 'fail',
-                        message: 'Message with that title already exist',
-                    });
-                }
-                next(err);
             }
-
-        } else {
-            return next(new AppError(401, 'User is not authorized to create Message'));
+            next(err);
         }
+
+
     } catch (err: any) {
         if (err.code === '23505') {
             return res.status(409).json({

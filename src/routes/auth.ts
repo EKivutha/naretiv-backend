@@ -8,7 +8,7 @@ import { createUserSchema, loginUserSchema, verifyEmailSchema } from '../schemas
 const router = express.Router();
 
 // Register user
-router.post('/register/', validate(createUserSchema), registerUserHandler);
+router.post('/register', validate(createUserSchema), registerUserHandler);
 
 // Login user
 router.post('/login', validate(loginUserSchema), loginUserHandler);

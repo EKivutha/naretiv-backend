@@ -1,1 +1,0 @@
-// TODO : integrate with a payments provider

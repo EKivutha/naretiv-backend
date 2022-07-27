@@ -13,9 +13,7 @@ import cors from 'cors';
 import config from "config";
 import authRouter from './routes/auth';
 import userRouter from './routes/user';
-import productRouter from './routes/product';
 import messageRouter from './routes/message';
-import orderRouter from './routes/order';
 import AppError from "./utils/appError";
 import cookieParser from 'cookie-parser';
 import nodemailer from 'nodemailer';
@@ -49,18 +47,9 @@ AppDataSource.initialize()
 
         app.use('/api/auth', authRouter);
         app.use('/api/users', userRouter);
-        app.use('/api/products', productRouter);
         app.use('/api/messages', messageRouter);
-        app.use('/api/orders', orderRouter);
-        // app.use(
-        //     "/graphql",
-        //     graphqlHTTP({
-        //       schema,
-        //       graphiql: true,
-        //     })
-        //   );
-        // setup express app here
-        // ...
+        
+        
         app.get('/api/healthchecker', async (_, res: Response) => {
             const message = await redisClient.get('try');
             res.status(200).json({
@@ -87,28 +76,11 @@ AppDataSource.initialize()
         );
 
         // start express server
-        app.listen(3001)
+        const port = config.get<number>('port');
+        app.listen(port)
 
-        // // insert new users for test
-        // await AppDataSource.manager.save(
-        //     AppDataSource.manager.create(User, {
-        //         name: "Timber",
-        //         email: "saw@gmail.com",
-        //         age: 27,
-        //         password: '12341234'
-        //     })
-        // )
 
-        // await AppDataSource.manager.save(
-        //     AppDataSource.manager.create(User, {
-        //         name: "Phantom",
-        //         email: "assassin@gmail.com",
-        //         age: 24,
-        //         password: '12341234'
-        //     })
-        // )
-
-        console.log("Express server has started on port 3000. Open http://localhost:3000/users to see results")
+        console.log(`Express server has started on http://localhost:${port}/ to see results`)
 
     }).catch(error => console.log(error))
 

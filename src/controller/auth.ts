@@ -58,7 +58,8 @@ export const registerUserHandler = async (
       email: email.toLowerCase(),
       password,
       role,
-      age
+      age,
+      passwordConfirm: '',
     });
 
     const { hashVerificationCode, verificationCode } =
@@ -69,7 +70,7 @@ export const registerUserHandler = async (
     // Send Verification Email
     const redirectUrl = `${config.get<string>(
       'origin'
-    )}/verifyemail/${verificationCode}`;
+    )}/api/auth/verifyemail/${verificationCode}`;
 
     try {
       await new Email(newUser, redirectUrl).sendVerificationCode();

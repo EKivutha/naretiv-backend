@@ -1,8 +1,8 @@
 import e, { NextFunction } from 'express';
 import { FindOptionsRelations, FindOptionsSelect, FindOptionsWhere } from 'typeorm';
-import { AppDataSource } from '../data-source';
+import { AppDataSource } from '../utils/data-source';
 import { Message } from '../entity/message';
-import { User } from '../entity/user';
+import { User } from '../entity/user';9
 import AppError from '../utils/appError';
 
 const messageRepository = AppDataSource.getRepository(Message);
@@ -15,8 +15,9 @@ export const createMessage = async (
     return await messageRepository.save(
         messageRepository.create({
             ...input,
-            user_to,
-            user           
+            // user,
+            // user_to,
+                       
             
         }))
 }
