@@ -40,7 +40,7 @@ AppDataSource.initialize()
         app.use(helmet())
         app.use(
             cors({
-                origin: config.get<string>('origin'),
+                // origin: config.get<string>('origin'),
                 credentials: true,
             })
         );

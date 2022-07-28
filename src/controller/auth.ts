@@ -127,7 +127,6 @@ export const loginUserHandler = async (
 
     //  Sign Access and Refresh Tokens
     const { access_token, refresh_token } = await signTokens(user);
-
     //  Add Cookies
     res.cookie('access_token', access_token, accessTokenCookieOptions);
     res.cookie('refresh_token', refresh_token, refreshTokenCookieOptions);
@@ -140,6 +139,7 @@ export const loginUserHandler = async (
     res.status(200).json({
       status: 'success',
       access_token,
+      user,
     });
   } catch (err: any) {
     next(err);
