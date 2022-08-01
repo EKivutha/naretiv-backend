@@ -7,7 +7,7 @@ export enum RoleEnumType {
 }
 import crypto from 'crypto';
 import Model from "./model";
-import { Message } from "./message";
+import  {Message}  from "./message";
 
 @Entity('users')
 export class User extends Model {
