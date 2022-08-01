@@ -3,8 +3,9 @@ require('dotenv').config()
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import config from 'config';
-// import { Message } from '../entity/message';
 import { User } from '../entity/user';
+import { Message } from '../entity/message';
+
 // import { CreateAdminUser1547919837483 } from '../migration/createAdminUser';
 
 const postgresConfig = config.get<{
@@ -21,7 +22,7 @@ export const AppDataSource = new DataSource({
   synchronize: true, //allow message and auto order updates through api subscriptions.
   // logging:true,
   // logging: "all",
-  entities: [User],
+  entities: [User, Message],
   // migrations: [CreateAdminUser1547919837483],
   // subscribers: ['src/subscribers/**/*{.ts,.js}'],
 });
