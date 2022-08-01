@@ -27,8 +27,6 @@
       "cors": "^2.8.5",
       "envalid": "^7.3.1",
       "express": "^4.17.2",
-      "express-graphql": "^0.12.0",
-      "graphql": "^16.5.0",
       "helmet": "^5.1.0",
       "html-to-text": "^8.2.0",
       "jsonwebtoken": "^8.5.1",

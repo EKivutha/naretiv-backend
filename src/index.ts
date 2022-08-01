@@ -1,6 +1,5 @@
 require('dotenv').config()
 import express, { NextFunction } from "express";
-import { graphqlHTTP } from "express-graphql";
 import helmet from 'helmet';
 import * as bodyParser from "body-parser";
 import morgan from 'morgan';
