@@ -77,7 +77,7 @@ AppDataSource.initialize()
 
         // start express server
         const port = config.get<number>('port');
-        app.listen(port)
+        app.listen(port, '0.0.0.0')
 
 
         console.log(`Express server has started on http://localhost:${port}/ to see results`)
