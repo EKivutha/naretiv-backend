@@ -1,6 +1,6 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import Model from './model';
-import { User } from './user';
+import {User}  from './user';
 
 @Entity('messages')
 export class Message extends Model {
