@@ -11,7 +11,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 USER node
 # Installs all node packages
-RUN npm install
+RUN yarn install
 
 # Copies everything over to Docker environment
 COPY --chown=node:node . .
