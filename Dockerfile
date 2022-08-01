@@ -16,7 +16,7 @@ RUN npm install
 COPY . .
 
 # Uses port which is used by the actual application
-EXPOSE 3001
+EXPOSE 8000
 
 # Finally runs the application
 CMD [ "npm", "start" ]
