@@ -78,7 +78,7 @@ export const registerUserHandler = async (
       res.status(201).json({
         status: 'success',
         message:
-          'An email with a verification code has been sent to your email',
+          `An email with a verification code has been sent to ${email}`,
       });
     } catch (error) {
       console.log('email error',error)
@@ -87,7 +87,7 @@ export const registerUserHandler = async (
 
       return res.status(500).json({
         status: 'error',
-        message: 'There was an error sending email, please try again',
+        message: `There was an error sending email to ${email}, please try again`,
       });
     }
   } catch (err: any) {
