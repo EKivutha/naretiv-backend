@@ -1,8 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, Index, ManyToOne, BeforeInsert, OneToMany, ManyToMany, JoinColumn, JoinTable } from "typeorm"
 import * as bcrypt from "bcryptjs";
 export enum RoleEnumType {
-  BUYER = 'buyer',
-  SELLER = 'seller',
+  VIEWER = 'viewer',
   ADMIN = 'admin',
 }
 import crypto from 'crypto';
