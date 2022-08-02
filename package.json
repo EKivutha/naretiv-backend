@@ -42,7 +42,7 @@
    "scripts": {
       "start": "ts-node-dev --respawn --transpile-only --exit-child src/index.ts",
       "build": "tsc -p .",
-      "deploy": "docker compose down && docker build -t naretiv-backend . && docker-compose up -d",
+      "deploy": "docker-compose down && docker build -t naretiv-backend . && docker-compose up -d",
       "dev": " nodemon src/index.ts",
       "typeorm": "typeorm-ts-node-commonjs",
       "migrate": "rm -rf build && yarn build && yarn typeorm migration:generate ./src/migration/createAdminUser.ts -d ./src/utils/data-source.ts",
