@@ -79,8 +79,8 @@ AppDataSource.initialize()
         app.listen(port, '0.0.0.0')
 
 
-        console.log(`Express server has started on http://localhost:${port}/ to see results`)
+        console.log(`Express server has started on http://44.202.32.175:${port}/ to see results`)
 
-    }).catch(error => console.log(error))
+    }).catch((error: any) => console.log(error))
 
 
